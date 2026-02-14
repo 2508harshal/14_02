@@ -181,12 +181,14 @@ body::before {
     justify-content: flex-start;
     padding: 0 10px;
     transition: width 0.5s ease;
+    overflow-x: auto;
 }
 
 .heart-progress {
-    margin: 0 5px;
+    margin: 0 2px;
     font-size: 20px;
     animation: heartbeat 1s ease-in-out infinite;
+    flex-shrink: 0;
 }
 
 @keyframes heartbeat {
@@ -629,6 +631,10 @@ body::before {
     background: rgba(255, 182, 193, 0.1);
     border-radius: 15px;
     border-left: 4px solid #e91e63;
+    max-height: 70vh;
+    overflow-y: auto;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .letter-content p {
@@ -722,6 +728,16 @@ body::before {
         font-size: 0.9rem;
     }
     
+    .progress-bar {
+        max-width: 280px;
+        height: 35px;
+    }
+    
+    .heart-progress {
+        margin: 0 1px;
+        font-size: 18px;
+    }
+    
     .yes-btn {
         min-width: 100px;
     }
@@ -763,13 +779,20 @@ body::before {
         font-size: 0.8rem;
     }
     
-    .love-title {
-        font-size: 1.8rem;
-    }
-    
     .letter-content {
         font-size: 0.9rem;
         padding: 15px;
+        line-height: 1.6;
+    }
+    
+    .love-title {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+    
+    .restart-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
 }
 
@@ -790,5 +813,103 @@ body::before {
     .btn {
         padding: 8px 15px;
         font-size: 0.7rem;
+    }
+    
+    .love-title {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+    
+    .letter-content {
+        font-size: 0.8rem;
+        padding: 12px;
+        line-height: 1.5;
+    }
+    
+    .restart-btn {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        padding: 5px;
+    }
+    
+    .quiz-container {
+        padding: 10px 8px;
+        border-radius: 10px;
+        min-height: 280px;
+        width: 98%;
+    }
+    
+    .title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+    
+    .question {
+        font-size: 0.85rem;
+        margin-bottom: 20px;
+        line-height: 1.4;
+    }
+    
+    .buttons-container {
+        gap: 10px;
+        min-height: 70px;
+    }
+    
+    .btn {
+        padding: 8px 12px;
+        font-size: 0.7rem;
+    }
+    
+    .love-title {
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+    }
+    
+    .letter-content {
+        font-size: 0.75rem;
+        padding: 10px;
+        line-height: 1.4;
+        max-height: 65vh;
+    }
+    
+    .restart-btn {
+        padding: 8px 12px;
+        font-size: 0.75rem;
+    }
+    
+    .music-controls {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .music-btn, .download-btn {
+        padding: 8px 12px;
+        font-size: 0.7rem;
+    }
+    
+    .progress-bar {
+        max-width: 260px;
+        height: 40px;
+        padding: 0 5px;
+    }
+    
+    .progress-hearts {
+        padding: 0 5px;
+        justify-content: center;
+    }
+    
+    .heart-progress {
+        margin: 0 0.5px;
+        font-size: 16px;
+    }
+    
+    .progress-text {
+        font-size: 0.8rem;
+        display: block;
     }
 }

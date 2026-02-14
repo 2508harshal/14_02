@@ -61,30 +61,43 @@ function createStars() {
 function createParticles(x, y) {
     const colors = ['#ff6b6b', '#e91e63', '#ff1744', '#f50057', '#ff4081', '#ffffff'];
     const shapes = ['❤️', '💕', '💖', '💗', '💝', '✨', '⭐', '💞', '💓', '💘'];
+    const particleCount = 25; // Reduced from 50
+    const fragment = document.createDocumentFragment();
+    const particles = [];
     
-    for (let i = 0; i < 50; i++) {
+    // Create all particles at once
+    for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.innerHTML = shapes[Math.floor(Math.random() * shapes.length)];
         particle.style.left = x + 'px';
         particle.style.top = y + 'px';
         particle.style.color = colors[Math.floor(Math.random() * colors.length)];
-        particle.style.fontSize = Math.random() * 30 + 15 + 'px';
+        particle.style.fontSize = Math.random() * 20 + 12 + 'px';
         
-        const angle = (Math.PI * 2 * i) / 50;
-        const velocity = Math.random() * 200 + 100;
+        const angle = (Math.PI * 2 * i) / particleCount;
+        const velocity = Math.random() * 150 + 80;
         const vx = Math.cos(angle) * velocity;
-        const vy = Math.sin(angle) * velocity - 100;
+        const vy = Math.sin(angle) * velocity - 80;
         
         particle.style.setProperty('--vx', vx + 'px');
         particle.style.setProperty('--vy', vy + 'px');
         
-        particlesContainer.appendChild(particle);
-        
-        setTimeout(() => {
-            particle.remove();
-        }, 3000);
+        fragment.appendChild(particle);
+        particles.push(particle);
     }
+    
+    // Append all particles at once
+    particlesContainer.appendChild(fragment);
+    
+    // Remove all particles after animation
+    setTimeout(() => {
+        particles.forEach(particle => {
+            if (particle.parentNode) {
+                particle.remove();
+            }
+        });
+    }, 2500);
 }
 
 function updateProgress() {
@@ -93,8 +106,8 @@ function updateProgress() {
     progressText.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
     
     progressHearts.innerHTML = '';
-    const filledHearts = Math.floor((currentQuestion + 1) / questions.length * 10);
-    for (let i = 0; i < 10; i++) {
+    const filledHearts = Math.floor((currentQuestion + 1) / questions.length * questions.length);
+    for (let i = 0; i < questions.length; i++) {
         const heart = document.createElement('span');
         heart.className = 'heart-progress';
         heart.textContent = i < filledHearts ? '❤️' : '🤍';
@@ -130,34 +143,49 @@ function toggleMusic() {
 
 function createConfetti() {
     const colors = ['#ff6b6b', '#e91e63', '#ff1744', '#f50057', '#ff4081', '#4caf50', '#2196f3', '#ff9800'];
-    const confettiCount = 200;
+    const confettiCount = 100; // Reduced from 200
+    const fragment = document.createDocumentFragment();
+    const confettiElements = [];
     
+    // Create all confetti at once
     for (let i = 0; i < confettiCount; i++) {
         const confetti = document.createElement('div');
         confetti.style.position = 'fixed';
-        confetti.style.width = '15px';
-        confetti.style.height = '15px';
+        confetti.style.width = '12px';
+        confetti.style.height = '12px';
         confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
         confetti.style.left = Math.random() * 100 + '%';
-        confetti.style.top = '-15px';
+        confetti.style.top = '-12px';
         confetti.style.opacity = '1';
         confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-        confetti.style.transition = 'all 4s ease-out';
+        confetti.style.transition = 'all 3s ease-out';
         confetti.style.zIndex = '10000';
         confetti.style.pointerEvents = 'none';
         
-        document.body.appendChild(confetti);
-        
-        setTimeout(() => {
+        fragment.appendChild(confetti);
+        confettiElements.push(confetti);
+    }
+    
+    // Append all confetti at once
+    document.body.appendChild(fragment);
+    
+    // Animate all confetti after a short delay
+    requestAnimationFrame(() => {
+        confettiElements.forEach(confetti => {
             confetti.style.top = '100%';
             confetti.style.transform = `rotate(${Math.random() * 720}deg)`;
             confetti.style.opacity = '0';
-        }, 100);
-        
-        setTimeout(() => {
-            confetti.remove();
-        }, 4100);
-    }
+        });
+    });
+    
+    // Remove all confetti after animation
+    setTimeout(() => {
+        confettiElements.forEach(confetti => {
+            if (confetti.parentNode) {
+                confetti.remove();
+            }
+        });
+    }, 3000);
 }
 
 function moveNoButton() {
@@ -251,17 +279,22 @@ function nextQuestion() {
 
 function showLoveLetter() {
     console.log('Showing love letter...');
-    questionCard.style.display = 'none';
-    loveLetter.style.display = 'block';
     
-    createConfetti();
-    createHeartExplosion();
-    
-    // Ensure buttons are visible
-    const restartBtn = document.querySelector('.restart-btn');
-    const downloadBtn = document.querySelector('.download-btn');
-    if (restartBtn) restartBtn.style.display = 'inline-block';
-    if (downloadBtn) downloadBtn.style.display = 'inline-block';
+    // Use requestAnimationFrame to avoid forced reflow
+    requestAnimationFrame(() => {
+        questionCard.style.display = 'none';
+        loveLetter.style.display = 'block';
+        
+        // Ensure buttons are visible
+        const restartBtn = document.querySelector('.restart-btn');
+        const downloadBtn = document.querySelector('.download-btn');
+        if (restartBtn) restartBtn.style.display = 'inline-block';
+        if (downloadBtn) downloadBtn.style.display = 'inline-block';
+        
+        // Stagger animations to prevent performance spikes
+        setTimeout(() => createConfetti(), 100);
+        setTimeout(() => createHeartExplosion(), 400);
+    });
 }
 
 function restartQuiz() {
@@ -321,27 +354,40 @@ document.addEventListener('DOMContentLoaded', () => {
 function createHeartExplosion() {
     const container = document.querySelector('.container');
     const colors = ['#ff6b6b', '#e91e63', '#ff1744', '#f50057', '#ff4081'];
+    const heartShapes = ['❤️', '💕', '💖', '💗', '💝', '💞', '💓', '💘'];
+    const fragment = document.createDocumentFragment();
+    const hearts = [];
     
-    for (let i = 0; i < 100; i++) {
-        setTimeout(() => {
-            const heart = document.createElement('div');
-            heart.innerHTML = ['❤️', '💕', '💖', '💗', '💝', '💞', '💓', '💘'][Math.floor(Math.random() * 8)];
-            heart.style.position = 'fixed';
-            heart.style.left = Math.random() * window.innerWidth + 'px';
-            heart.style.top = window.innerHeight + 'px';
-            heart.style.fontSize = Math.random() * 30 + 20 + 'px';
-            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-            heart.style.zIndex = '1000';
-            heart.style.pointerEvents = 'none';
-            heart.style.animation = `heartFloat ${Math.random() * 4 + 2}s ease-out forwards`;
-            
-            document.body.appendChild(heart);
-            
-            setTimeout(() => {
-                heart.remove();
-            }, 6000);
-        }, i * 50);
+    // Create all hearts at once
+    for (let i = 0; i < 50; i++) {
+        const heart = document.createElement('div');
+        const randomShape = heartShapes[Math.floor(Math.random() * heartShapes.length)];
+        
+        heart.innerHTML = randomShape;
+        heart.style.position = 'fixed';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.top = window.innerHeight + 'px';
+        heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+        heart.style.zIndex = '1000';
+        heart.style.pointerEvents = 'none';
+        heart.style.animation = `heartFloat ${Math.random() * 3 + 2}s ease-out forwards`;
+        
+        fragment.appendChild(heart);
+        hearts.push(heart);
     }
+    
+    // Append all hearts at once
+    document.body.appendChild(fragment);
+    
+    // Remove all hearts after animation
+    setTimeout(() => {
+        hearts.forEach(heart => {
+            if (heart.parentNode) {
+                heart.remove();
+            }
+        });
+    }, 5000);
 }
 
 const style = document.createElement('style');
