@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Valentine's Love Letter</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="hearts-container">
+            <div class="floating-heart">❤️</div>
+            <div class="floating-heart">💕</div>
+            <div class="floating-heart">💖</div>
+            <div class="floating-heart">💗</div>
+            <div class="floating-heart">💝</div>
+            <div class="floating-heart">💞</div>
+            <div class="floating-heart">💓</div>
+            <div class="floating-heart">💘</div>
+        </div>
+
+        <div class="quiz-container" id="quizContainer">
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress-hearts" id="progressHearts"></div>
+                </div>
+                <div class="progress-text" id="progressText">Question 1 of 10</div>
+            </div>
+
+            <div class="question-card" id="questionCard">
+                <h1 class="title">A Special Message For You 💕</h1>
+                <p class="question" id="questionText">Can I prove I'm not like your ex?</p>
+                
+                <div class="buttons-container">
+                    <button class="btn yes-btn" id="yesBtn">Yes ❤️</button>
+                    <button class="btn no-btn" id="noBtn">No</button>
+                </div>
+            </div>
+
+            <div class="love-letter" id="loveLetter" style="display: none;">
+                <h1 class="love-title">My Love Letter For You 💕</h1>
+                <div class="letter-content">
+                    <p>My dear someone special,</p>
+                    <p><strong>27th August 2025</strong> - I'll never forget that day. Ganpati at my home, when you came to pray. The moment I saw you, something changed in my heart forever. I knew that day that you were someone special.</p>
+                    <p>That week we spent together at the marriage was magical for me. Every moment, every conversation - it felt like time stood still. And those 10-12 hours in the bus returning home? Those were the best hours of my life. Talking with you, sitting next to you - I never wanted that journey to end.</p>
+                    <p>I know you've been hurt before, and I understand why you're afraid to trust again. But I want you to know that my feelings from <strong>27th August 2025</strong> are real. They haven't faded, they've only grown stronger with each passing day.</p>
+                    <p>I'm not asking for forever right now. I'm just asking for one chance - one opportunity to show you that what I feel is genuine. Let me create more memories like that week, more journeys like that bus ride, more moments like that first day I saw you.</p>
+                    <p>Let me be the one who proves that love doesn't have to hurt. Let me show you that you're worthy of a love that stays.</p>
+                    <p class="signature">Loving you since 27th August 2025,<br>Someone who cares deeply 💕</p>
+                </div>
+                <button class="restart-btn" onclick="restartQuiz">Start Again 💕</button>
+            </div>
+        </div>
+
+        <div class="bus-container">
+            <div class="bus-body">
+                <div class="bus-window"></div>
+                <div class="bus-window"></div>
+                <div class="bus-window"></div>
+                <div class="bus-window"></div>
+                <div class="bus-window"></div>
+                <div class="bus-wheel"></div>
+                <div class="bus-wheel"></div>
+                <div class="bus-smoke"></div>
+                <div class="bus-heart">💕</div>
+            </div>
+        </div>
+
+        <div class="music-controls">
+            <button class="music-btn" id="musicBtn">🎵 Play Music</button>
+            <button class="download-btn" id="downloadBtn" onclick="downloadWebsite()">💾 Save Forever</button>
+            <audio id="backgroundMusic" loop>
+                <source src="https://www.bensound.com/bensound-music/bensound-slow.mp3" type="audio/mpeg">
+                <source src="https://www.bensound.com/bensound-music/bensound-tenderness.mp3" type="audio/mpeg">
+                <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+                <source src="https://www.bensound.com/bensound-music/bensound-sweet.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <div class="stars-container" id="starsContainer"></div>
+        <div class="particles-container" id="particlesContainer"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
